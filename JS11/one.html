@@ -60,10 +60,18 @@ class Predator extends Animal {
 		    document.write("Я сыт, не могу больше есть! Нужно облегчиться <br>"); 
 		}else if (this.ratio.includes(meal)){
 	        this.weight += meal.length;
-		    document.write(`${this.name} съел ${meal}! <br>`);
-        } else if((meal instanceof Herbivore && this.weight >= meal.weight && this.size >= meal.size) || (meal instanceof Predator && meal !== this && this.weight >= meal.weight && this.size >= meal.size)) {
-	        this.weight += meal.weight;
-		    document.write(`${this.name} съел ${meal.name}! <br>`); 
+		      document.write(`${this.name} съел ${meal}! <br>`);
+        } else if( ( meal instanceof Herbivore &&          // VN: можно стуктурировать как-нибудь так,
+                     this.weight >= meal.weight &&         // чтобы улучшить читаемость
+                     this.size >= meal.size ) ||
+                   ( meal instanceof Predator && 
+                     meal !== this &&
+                     this.weight >= meal.weight && 
+                     this.size >= meal.size ) ) {
+	        this.weight += meal.weight; 
+		      document.write(`${this.name} съел ${meal.name}! <br>`);
+          // VN: всё же, одного и того же гуся можно есть несколько раз.
+          // Я проверил - так и есть) Это надо исправить!
         } else {
             document.write(`${this.name} не может съесть ${meal}! <br>`);
         }
