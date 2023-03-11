@@ -7,6 +7,7 @@ class Animal{
 		this.weight = weight;
 		this.size = size;
 		this.originalWeigt = weight;
+		this.live = true;
 	}
 	
 	talk(){
@@ -22,6 +23,10 @@ class Animal{
 	poop(){
            this.weight -= 5;
     }
+	
+	dead(){
+	    this.live = false;
+	}
 
 }
 
@@ -34,6 +39,7 @@ class Herbivore extends Animal {
     constructor(name, weight, size) {
         super(name, weight, size);
         this.ratio = ['морковка', "капуста", "яблоки", "трава", "бананы", "картошка"];
+		
     }
     eat(meal) {
         if (this.ratio.includes(meal)) {
@@ -61,9 +67,18 @@ class Predator extends Animal {
 		}else if (this.ratio.includes(meal)){
 	        this.weight += meal.length;
 		    document.write(`${this.name} съел ${meal}! <br>`);
-        } else if((meal instanceof Herbivore && this.weight >= meal.weight && this.size >= meal.size) || (meal instanceof Predator && meal !== this && this.weight >= meal.weight && this.size >= meal.size)) {
+        } else if((meal instanceof Herbivore && meal.live === false) || (meal instanceof Predator && meal.live === false)){
+            document.write(`${this.name} не может съесть ${meal.name}! ${meal.name} мертв(( <br> `);
+        } else if((meal instanceof Herbivore && 
+		           this.weight >= meal.weight && 
+				   this.size >= meal.size) || 
+				   (meal instanceof Predator && 
+				   meal !== this && 
+				   this.weight >= meal.weight && 
+				   this.size >= meal.size)) {
 	        this.weight += meal.weight;
 		    document.write(`${this.name} съел ${meal.name}! <br>`); 
+			meal.dead();
         } else {
             document.write(`${this.name} не может съесть ${meal}! <br>`);
         }
@@ -112,4 +127,19 @@ let wolf1 = new Wolf('Рекс', 41, 100);
 let wolf2 = new Wolf('Макс', 35, 90);
 let wolf3 = new Wolf('Гроза', 45, 110);
 
+goose1.talk();
+goose1.canFly;
+goose1.eat('морковка');
+goose2.eat('трава');
+goose2.poop();
+goose2.weight;
+
+wolf1.talk();
+wolf3.talk();
+wolf3.eat('мясо');
+wolf3.weight;
+wolf1.eat(goose1);
+goose1.live;
+wolf1.poop();
+wolf1.eat(goose1);
 </script>
